@@ -35,11 +35,8 @@
                     <div className="card">
                         {user ? (
                             <>
-                                <img
-                                    src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                    alt="Placeholder"
-                                />
-                                <div className="info" key={user.id}>
+                                <img src="./bg-girl.png" alt="Placeholder" />
+                                <ul className="info" key={user.id}>
                                     <li>Name: {user.name}</li>
                                     <li>Username: {user.username}</li>
                                     <li>Email: {user.email}</li>
@@ -49,7 +46,7 @@
                                         Address: {user.address.city},
                                         {user.address.street}
                                     </li>
-                                </div>
+                                </ul>
                             </>
                         ) : (
                             <>

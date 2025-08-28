@@ -66,14 +66,19 @@
                         .then((resComments) => setComments(resComments))
                         .finally(() => setLoading(false))
                 }, [])
-                return (
+                return loading ? (
+                    <p>Loading ...</p>
+                ) : (
                     <div className="comment">
                         <div className="comment__form">
                             <img
-                                src={`https://ui-avatars.com/api/?name=${"Duy"}&background=random`}
+                                src={`https://ui-avatars.com/api/?name=${"Duyyy"}&background=random`}
                                 alt=""
                             />
                             <div className="comment-action">
+                                <span className="current-user">
+                                    {"Duy (duynk@fullstack)"}
+                                </span>
                                 <textarea
                                     value={valueInput}
                                     name="comment-input"
@@ -91,52 +96,46 @@
                             </div>
                         </div>
                         <div className="comment__list">
-                            {loading ? (
-                                <p>Loading ...</p>
-                            ) : (
-                                comments.map((comment) => (
-                                    <div
-                                        className="comment-item"
-                                        key={comment.id}
-                                    >
-                                        <img
-                                            className="avatar"
-                                            src={`https://ui-avatars.com/api/?name=${comment.name}&background=random`}
-                                            alt=""
-                                        />
-                                        <div className="comment-content">
-                                            <div className="title">
-                                                <h3 className="user-name">
-                                                    {comment.name}
-                                                </h3>
-                                                <span className="time">
-                                                    2 hour ago
-                                                </span>
-                                            </div>
-                                            <span className="email">
-                                                {comment.email}
+                            {comments.map((comment) => (
+                                <div className="comment-item" key={comment.id}>
+                                    <img
+                                        className="avatar"
+                                        src={`https://ui-avatars.com/api/?name=${comment.name}&background=random`}
+                                        alt=""
+                                    />
+                                    <div className="comment-content">
+                                        <div className="title">
+                                            <h3 className="user-name">
+                                                {comment.name}
+                                            </h3>
+                                            <span className="time">
+                                                2 hour ago
                                             </span>
-                                            <p className="body">
-                                                {comment.body}
-                                            </p>
-                                            <div className="comment-footer">
-                                                <div className="like">
-                                                    <i className="fa-solid fa-thumbs-up"></i>
-                                                    20
-                                                </div>
-                                                <div className="dislike">
-                                                    <i className="fa-solid fa-thumbs-down"></i>
-                                                    20
-                                                </div>
-                                                <div className="dislike">
-                                                    <i className="fa-solid fa-comment-dots"></i>
-                                                    Reply
-                                                </div>
+                                        </div>
+                                        <span className="email">
+                                            {comment.email}
+                                        </span>
+                                        <p className="body">{comment.body}</p>
+                                        <span className="translate">
+                                            Translate
+                                        </span>
+                                        <div className="comment-footer">
+                                            <div className="like">
+                                                <i className="fa-solid fa-thumbs-up"></i>
+                                                20
+                                            </div>
+                                            <div className="dislike">
+                                                <i className="fa-solid fa-thumbs-down"></i>
+                                                20
+                                            </div>
+                                            <div className="dislike">
+                                                <i className="fa-solid fa-comment-dots"></i>
+                                                Reply
                                             </div>
                                         </div>
                                     </div>
-                                ))
-                            )}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 )

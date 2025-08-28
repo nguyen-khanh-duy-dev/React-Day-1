@@ -22,37 +22,50 @@
             function Counter() {
                 const [count, setCount] = React.useState(0)
                 return (
-                    <div className="container">
-                        <h2
-                            style={{
-                                color:
-                                    count > 0
-                                        ? "green"
-                                        : count < 0
-                                        ? "red"
-                                        : "gray",
-                            }}
-                        >
-                            {count}
-                        </h2>
+                    <div
+                        className={
+                            count > 0
+                                ? "container positive"
+                                : count < 0
+                                ? "container negative"
+                                : "container zero"
+                        }
+                    >
+                        <div className="count-section">
+                            <h2
+                                style={{
+                                    color:
+                                        count > 0
+                                            ? "#2e7d32"
+                                            : count < 0
+                                            ? "#c62828"
+                                            : "#616161",
+                                }}
+                            >
+                                {count}
+                            </h2>
+                        </div>
                         <div className="buttons">
                             <button
+                                className="decrease"
                                 onClick={() => handleDecrease(count, setCount)}
                             >
                                 Decrease
                             </button>
                             <button
+                                className="reset"
                                 onClick={() => handleReset(count, setCount)}
                             >
                                 Reset
                             </button>
                             <button
+                                className="increase"
                                 onClick={() => handleIncrease(count, setCount)}
                             >
                                 Increase
                             </button>
                         </div>
-                        <span>
+                        <span className="status">
                             Trạng thái hiện tại:{" "}
                             {count > 0
                                 ? "Dương"
