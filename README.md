@@ -54,3 +54,8 @@
 
 -   JSX được sinh ra để thay thế `React.createElement`.
 -   Giúp viết code gần giống HTML nhưng mạnh mẽ hơn.
+
+## Library
+
+-   Để sử dụng JSX => sử dụng thư viện Babel: https://babeljs.io/docs/babel-standalone
+-   Sử dụng React và ReactDOM(Bản cũ) : https://legacy.reactjs.org/docs/cdn-links.html
