@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="productList.css" />
+    </head>
+    <body>
+        <div id="root"></div>
+        <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.development.js"
+        ></script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+        ></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+        <script type="text/babel">
+            // Component
+            function ProductList() {
+                const [products, setProducts] = React.useState([])
+                const [loading, setLoading] = React.useState(true)
+                const [expandIds, setExpandIds] = React.useState([])
+
+                const handleCutContent = (content) => {
+                    if (content.length > 100) {
+                        return `${content.slice(0, 100)}...`
+                    } else {
+                        return content
+                    }
+                }
+
+                const handleShowDetail = (id) => {
+                    setExpandIds((prev) =>
+                        prev.includes(id)
+                            ? prev.filter((x) => x !== id)
+                            : [...prev, id]
+                    )
+                }
+
+                React.useEffect(() => {
+                    fetch(
+                        "https://jsonplaceholder.typicode.com/posts?_limit=12"
+                    )
+                        .then((res) => res.json())
+                        .then((resProducts) => setProducts(resProducts))
+                        .finally(() => setLoading(false))
+                }, [])
+                return (
+                    <>
+                        {loading ? (
+                            <p>Loading ...</p>
+                        ) : (
+                            products.map((product) => {
+                                const isExpanded = expandIds.includes(
+                                    product.id
+                                )
+                                return (
+                                    <div
+                                        className="product-card"
+                                        key={product.id}
+                                    >
+                                        <span>{product.id}</span>
+                                        <h3>{product.title}</h3>
+                                        <p className="content">
+                                            {isExpanded
+                                                ? product.body
+                                                : handleCutContent(
+                                                      product.body
+                                                  )}
+                                        </p>
+                                        <button
+                                            onClick={() =>
+                                                handleShowDetail(product.id)
+                                            }
+                                        >
+                                            {isExpanded
+                                                ? "Thu gọn"
+                                                : "Xem chi tiết"}
+                                        </button>
+                                    </div>
+                                )
+                            })
+                        )}
+                    </>
+                )
+            }
+
+            const app = (
+                <>
+                    <h1>Product List</h1>
+                    <ProductList></ProductList>
+                </>
+            )
+
+            const root = ReactDOM.createRoot(document.querySelector("#root"))
+            root.render(app)
+        </script>
+    </body>
+</html>

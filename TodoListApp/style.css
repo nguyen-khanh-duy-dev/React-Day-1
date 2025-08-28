@@ -1,0 +1,42 @@
+#root {
+    /* max-width: 300px; */
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 6px 0;
+    width: 210px;
+}
+
+.todo-item span {
+    font-size: 20px;
+}
+
+.todo-item span.done {
+    text-decoration: line-through;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+}
+
+.todo-item input {
+    cursor: pointer;
+    width: 17px;
+    height: 17px;
+}
+
+.todo-item button {
+    margin-left: auto;
+    background: red;
+    color: white;
+    border: none;
+    padding: 3px 7px;
+    border-radius: 4px;
+    cursor: pointer;
+}

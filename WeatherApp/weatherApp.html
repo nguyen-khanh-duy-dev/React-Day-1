@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="weatherApp.css" />
+    </head>
+    <body>
+        <div id="root"></div>
+        <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.development.js"
+        ></script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+        ></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+        <script type="text/babel">
+            // Component
+            function WeatherApp() {
+                const weatherData = {
+                    hanoi: {
+                        city: "Hà Nội",
+                        temp: 28,
+                        weather: "Nắng",
+                        humidity: 65,
+                    },
+                    hcm: {
+                        city: "TP.HCM",
+                        temp: 32,
+                        weather: "Có mây",
+                        humidity: 78,
+                    },
+                    danang: {
+                        city: "Đà Nẵng",
+                        temp: 30,
+                        weather: "Mưa nhẹ",
+                        humidity: 82,
+                    },
+                }
+
+                const [values, setValues] = React.useState(weatherData.hanoi)
+
+                const handleChangeOption = (e) => {
+                    Object.entries(weatherData).filter(([key, data]) => {
+                        if (key === e.target.value) {
+                            setValues(data)
+                        }
+                    })
+                }
+
+                const handleChangeIcon = (weather) => {
+                    if (weather === "Nắng") {
+                        return "☀️"
+                    } else if (weather === "Có mây") {
+                        return "🌤️"
+                    } else if (weather === "Mưa nhẹ") {
+                        return "🌧️"
+                    }
+                }
+                return (
+                    <>
+                        <select
+                            name="city"
+                            id="slection-city"
+                            onChange={handleChangeOption}
+                        >
+                            <option value="">Chọn thành phố của bạn</option>
+                            {Object.keys(weatherData).map((key) => (
+                                <option value={key} key={key}>
+                                    {key}
+                                </option>
+                            ))}
+                        </select>
+                        <div className="weather-card">
+                            <div className="detail">
+                                <h2 className="city">{values.city}</h2>
+                                <span className="temp">
+                                    {values.temp}
+                                    <sup>°</sup>
+                                </span>
+                                <span className="status">{values.weather}</span>
+                                <span className="humidity">
+                                    Độ ẩm: {values.humidity}
+                                </span>
+                            </div>
+                            <span className="icon">
+                                {handleChangeIcon(values.weather)}
+                            </span>
+                        </div>
+                    </>
+                )
+            }
+
+            const app = (
+                <>
+                    <h1>Weather App</h1>
+                    <WeatherApp></WeatherApp>
+                </>
+            )
+
+            const root = ReactDOM.createRoot(document.querySelector("#root"))
+            root.render(app)
+        </script>
+    </body>
+</html>
