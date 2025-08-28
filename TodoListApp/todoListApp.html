@@ -24,6 +24,7 @@
             function TodoApp() {
                 const [inputValue, setInputValue] = React.useState("")
                 const [todos, setTodos] = React.useState([])
+                const [todosCompleted, setTodosCompleted] = React.useState([])
 
                 const handleInputChange = (e) => {
                     setInputValue(e.target.value)
@@ -59,8 +60,23 @@
                     )
                 }
 
+                const summaryCompleteTask = () => {
+                    const totalCompleted = todos.filter(
+                        (todo) => todo.complete === true
+                    )
+                    return totalCompleted.length
+                }
+
+                const summaryPendingTask = () => {
+                    const totalPending = todos.filter(
+                        (todo) => todo.complete === false
+                    )
+                    return totalPending.length
+                }
+
                 return (
-                    <>
+                    <div className="container">
+                        <h2 className="heading">My task</h2>
                         <form onSubmit={handleSubmit}>
                             <input
                                 value={inputValue}
@@ -69,35 +85,56 @@
                             />
                             <button type="submit">Thêm</button>
                         </form>
-                        <ul>
-                            {todos.map((todo) => {
-                                return (
-                                    <li key={todo.id} className="todo-item">
-                                        <input
-                                            type="checkbox"
-                                            onChange={() =>
-                                                handleChecked(todo.id)
-                                            }
-                                        />
-                                        <span
-                                            className={
-                                                todo.complete ? "done" : ""
-                                            }
-                                        >
-                                            {todo.text}
-                                        </span>
-                                        <button
-                                            onClick={() =>
-                                                handleDelete(todo.id)
-                                            }
-                                        >
-                                            Xóa
-                                        </button>
-                                    </li>
-                                )
-                            })}
-                        </ul>
-                    </>
+                        {todos.length > 0 ? (
+                            <ul>
+                                {todos.map((todo) => {
+                                    return (
+                                        <li key={todo.id} className="todo-item">
+                                            <input
+                                                type="checkbox"
+                                                onChange={() =>
+                                                    handleChecked(todo.id)
+                                                }
+                                            />
+                                            <span
+                                                className={
+                                                    todo.complete ? "done" : ""
+                                                }
+                                            >
+                                                {todo.text}
+                                            </span>
+                                            <button
+                                                onClick={() =>
+                                                    handleDelete(todo.id)
+                                                }
+                                            >
+                                                Xóa
+                                            </button>
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        ) : (
+                            <p className="loading">
+                                Chưa có task nào. Hãy thêm task đầu tiên !!!
+                            </p>
+                        )}
+
+                        <div className="task-summary">
+                            <div className="box task-total">
+                                Tổng: {todos.length}{" "}
+                                {todos.length > 1 ? "tasks" : "task"}
+                            </div>
+                            <div className="box task-pending">
+                                Còn lại: {summaryPendingTask()}{" "}
+                                {summaryPendingTask() > 1 ? "tasks" : "task"}
+                            </div>
+                            <div className="box task-completed">
+                                Hoàn thành: {summaryCompleteTask()}{" "}
+                                {summaryCompleteTask() > 1 ? "tasks" : "task"}
+                            </div>
+                        </div>
+                    </div>
                 )
             }
 
