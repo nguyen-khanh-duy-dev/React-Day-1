@@ -1,4 +1,4 @@
-# ReactJS Notes - Day 34 FullStack
+# ReactJS Notes
 
 ## 🌟 ReactJS là gì?
 
