@@ -5,6 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <link rel="stylesheet" href="productList.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+            integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
     </head>
     <body>
         <div id="root"></div>
@@ -20,10 +27,31 @@
 
         <script type="text/babel">
             // Component
+            function Modal({ product, onClose }) {
+                if (!product) return null
+                return (
+                    <div className="modal-overlay">
+                        <div className="box-modal">
+                            <div className="header">
+                                <span className="id">{product.id}</span>
+                                <i
+                                    className="fa-solid fa-xmark"
+                                    onClick={onClose}
+                                ></i>
+                            </div>
+                            <div className="content">
+                                <div class="title">{product.title}</div>
+                                <p className="text-content">{product.body}</p>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+
             function ProductList() {
                 const [products, setProducts] = React.useState([])
                 const [loading, setLoading] = React.useState(true)
-                const [expandIds, setExpandIds] = React.useState([])
+                const [expandProduct, setExpandProduct] = React.useState(null)
 
                 const handleCutContent = (content) => {
                     if (content.length > 100) {
@@ -31,14 +59,6 @@
                     } else {
                         return content
                     }
-                }
-
-                const handleShowDetail = (id) => {
-                    setExpandIds((prev) =>
-                        prev.includes(id)
-                            ? prev.filter((x) => x !== id)
-                            : [...prev, id]
-                    )
                 }
 
                 React.useEffect(() => {
@@ -55,9 +75,6 @@
                             <p>Loading ...</p>
                         ) : (
                             products.map((product) => {
-                                const isExpanded = expandIds.includes(
-                                    product.id
-                                )
                                 return (
                                     <div
                                         className="product-card"
@@ -66,25 +83,24 @@
                                         <span>{product.id}</span>
                                         <h3>{product.title}</h3>
                                         <p className="content">
-                                            {isExpanded
-                                                ? product.body
-                                                : handleCutContent(
-                                                      product.body
-                                                  )}
+                                            {handleCutContent(product.body)}
                                         </p>
                                         <button
                                             onClick={() =>
-                                                handleShowDetail(product.id)
+                                                setExpandProduct(product)
                                             }
                                         >
-                                            {isExpanded
-                                                ? "Thu gọn"
-                                                : "Xem chi tiết"}
+                                            Xem chi tiết
                                         </button>
                                     </div>
                                 )
                             })
                         )}
+
+                        <Modal
+                            product={expandProduct}
+                            onClose={() => setExpandProduct(null)}
+                        ></Modal>
                     </>
                 )
             }
